@@ -1,33 +1,32 @@
-# Proiect 2 Inteligenta Artificiala - ML Applied
+# Project 2 Artificial Intelligence - Applied ML
 
 #### Dumitrascu Filip-Teodor 333CA
 
-## Continut
-1. [Introducere](#introducere)
-2. [EDA](#eda)
-3. [Preprocesare Date](#preprocesare-date)
-4. [Algoritmi](#algoritmi)
-5. [Comparatie](#comparatie)
+## Contents
+1. [Introduction](#introduction)  
+2. [EDA](#eda)  
+3. [Data Preprocessing](#data-preprocessing)  
+4. [Algorithms](#algorithms)  
+5. [Comparison](#comparison) 
 
-## Introducere
-În activitatea curentă a unui inginer sau cercetător din domeniul inteligenței artificiale, în special al învățării automate, apar frecvent următoarele trei componente esențiale:
+## Introduction
+In the current activity of an engineer or researcher in the field of artificial intelligence, especially machine learning, the following three essential components frequently appear:
 
-- Vizualizarea și analiza exploratorie a datelor (EDA – Exploratory Data Analysis)
-- Identificarea și extragerea caracteristicilor relevante ale datelor, utile pentru obiectivul propus (precum clasificare, regresie sau detecția anomaliilor)
-- Testarea și compararea mai multor modele, în vederea alegerii celei mai eficiente soluții pentru problema abordată.
+- Visualization and exploratory data analysis (EDA – Exploratory Data Analysis)  
+- Identifying and extracting relevant data features, useful for the proposed objective (such as classification, regression, or anomaly detection)  
+- Testing and comparing multiple models, in order to choose the most efficient solution for the addressed problem.  
 
-Astfel, in acest proiect sunt analizate două seturi de date (Air pollution si News popularity) care sunt parcurse prin etapele menționate anterior, având ca scop aprofundarea înțelegerii procesului de învățare automată.
+Thus, in this project two datasets are analyzed (Air Pollution and News Popularity), which are processed through the steps mentioned above, aiming to deepen the understanding of the machine learning process.
 
 ## EDA
 ### Air pollution
-#### Tipul atributelor
-Având în vedere tipul valorilor pe care le conțin și intervalele în care acestea variază, atributele din setul de date pot fi clasificate în următoarele categorii: (se ignora `Unnamed 0`)
-- atribute continue: `AQI_Value`, `CO_Value`, `Ozone_Value`, `NO2_Value`, `PM25_Value`, `VOCs`, `SO2` (numerice, valori unice > 20, range de valori > 50)
-- atribute discrete: `Country`, `City` (restul care nu sunt continue si ordinale)
-- atribute ordinale: `AQI_Category`, `CO_Category`, `Ozone_Category`, `NO2_Category`, `PM25_Category`, `Emissions` (contin obiecte ordonate: Good-Moderate, Level0-Level5)
+#### Attribute types
+Considering the type of values they contain and the ranges in which they vary, the dataset attributes can be classified into the following categories (ignoring `Unnamed 0`):  
+- continuous attributes: `AQI_Value`, `CO_Value`, `Ozone_Value`, `NO2_Value`, `PM25_Value`, `VOCs`, `SO2` (numeric, unique values > 20, value range > 50)  
+- discrete attributes: `Country`, `City` (the rest that are neither continuous nor ordinal)  
+- ordinal attributes: `AQI_Category`, `CO_Category`, `Ozone_Category`, `NO2_Category`, `PM25_Category`, `Emissions` (contain ordered objects: Good–Moderate, Level0–Level5)  
 
-
-#### Atribute numerice continue analiza
+#### Continuous numerical attributes analysis
 | Attribute   | Count   | Mean      | Std Dev   | Min     | 25%     | 50%     | 75%     | Max       |
 |-------------|---------|-----------|-----------|---------|---------|---------|---------|-----------|
 | AQI_Value   | 23463.0 | 72.01     | 56.06     | 6.00    | 39.00   | 55.00   | 79.00   | 500.00    |
@@ -40,14 +39,14 @@ Având în vedere tipul valorilor pe care le conțin și intervalele în care ac
 
 ![alt text](images/air_polution/boxplot/boxplot_cont_feat_air.png)
 
-Boxplot-ul evidențiază faptul că majoritatea valorilor pentru atributele continue din setul de date Air Pollution (precum `SO2`, `CO_Value`, `NO2_Value`) sunt concentrate în intervale relativ mici, în timp ce există numeroși outlieri care depășesc cu mult aceste valori. Atributele `VOCs`, `PM25_Value` și `AQI_Value` se remarcă prin plaje mari de valori și un număr ridicat de valori extreme, indicând o distribuție dezechilibrată și posibilă nevoie de tratament al outlierilor.
+The boxplot highlights that most values for continuous attributes in the Air Pollution dataset (such as `SO2`, `CO_Value`, `NO2_Value`) are concentrated in relatively small ranges, while there are numerous outliers that far exceed these values. The attributes `VOCs`, `PM25_Value`, and `AQI_Value` are notable for their wide ranges of values and high number of extreme values, indicating an unbalanced distribution and a possible need for outlier treatment.
 
-#### Atribute ordinale analiza
+#### Ordinal attributes analysis
 
 - AQI_Category — Number of examples non-null: 23463
 - AQI_Category — Number of unique values: 6
 ![alt text](images/air_polution/histogram/ordinal_feat_histogram_AQI_Category.png)
-AQI_Category prezintă o distribuție puternic dezechilibrată, cu majoritatea articolelor etichetate drept Good sau Moderate. Clasele Very Unhealthy și Hazardous sunt semnificativ sub-reprezentate.
+AQI_Category shows a highly skewed distribution, with most items labeled as Good or Moderate. The Very Unhealthy and Hazardous classes are significantly underrepresented.
 
 - CO_Category — Number of examples non-null: 21117
 - CO_Category — Number of unique values: 2
@@ -60,7 +59,7 @@ AQI_Category prezintă o distribuție puternic dezechilibrată, cu majoritatea a
 - NO2_Category — Number of examples non-null: 23463
 - NO2_Category — Number of unique values: 2
 ![alt text](images/air_polution/histogram/ordinal_feat_histogram_NO2_Category.png)
-CO_Category, NO2_Category și Ozone_Category sunt dominate de categoria Good, celelalte clase fiind aproape absente. Acest dezechilibru poate afecta performanța algoritmilor de clasificare.
+CO_Category, NO2_Category, and Ozone_Category are dominated by the Good category, with the other classes being almost absent. This imbalance may affect the performance of classification algorithms.
 
 - PM25_Category — Number of examples non-null: 23463
 - PM25_Category — Number of unique values: 6
@@ -69,37 +68,36 @@ CO_Category, NO2_Category și Ozone_Category sunt dominate de categoria Good, ce
 - Emissions — Number of examples non-null: 23463
 - Emissions — Number of unique values: 6
 ![alt text](images/air_polution/histogram/ordinal_feat_histogram_PM25_Category.png)
-Emissions și PM25_Category prezintă o distribuție mai variată, dar tot cu o concentrație ridicată în clasele L0 și L1, indicând un dezechilibru moderat spre sever în cadrul claselor ordinale de tip L.
+Emissions and PM25_Category show a more varied distribution, but still with a high concentration in classes L0 and L1, indicating a moderate to severe imbalance within the L-type ordinal classes.
 
-#### Echilibrul Claselor
+#### Class Balance
 ![alt text](images/air_polution/boxplot/boxplot_classes_good-hazardous_air.png)
 
-Graficul evidențiază un dezechilibru semnificativ între clasele categoriei AQI. Cea mai mare parte a exemplelor sunt etichetate ca „Good” (peste 70.000), urmată la mare distanță de „Moderate” și apoi de celelalte clase („Unhealthy for Sensitive Groups”, „Unhealthy”, „Very Unhealthy” și „Hazardous”), care sunt subreprezentate. Acest dezechilibru poate afecta performanța algoritmilor de clasificare, care vor înclina spre clasele dominante.
+The graph highlights a significant imbalance between the AQI categories. Most examples are labeled as "Good" (over 70,000), followed at a considerable distance by "Moderate" and then by the other classes ("Unhealthy for Sensitive Groups," "Unhealthy," "Very Unhealthy," and "Hazardous"), which are underrepresented. This imbalance can affect the performance of classification algorithms, which will lean toward the dominant classes.
 
 ![alt text](images/air_polution/boxplot/boxplot_classes_l0-l5_air.png)
 
-Atributele ordinale legate de nivelul emisiilor (L0–L5) prezintă de asemenea un dezechilibru: clasele L0 și L1 sunt cele mai frecvente, în timp ce L4 și L5 apar rar. Acest tip de distribuție poate influența negativ capacitatea modelului de a învăța să recunoască corect cazurile mai puțin frecvente (niveluri mari de emisii).
+The ordinal attributes related to emission levels (L0–L5) also show an imbalance: classes L0 and L1 are the most frequent, while L4 and L5 occur rarely. This type of distribution can negatively influence the model's ability to learn to correctly recognize less frequent cases (high emission levels).
 
 #### Corelatia intre atribute
 
 ![alt text](images/air_polution/correlation/correlation_cont_matrix.png)
 
-Această matrice evidențiază corelațiile lineare între atributele numerice continue din setul de date Air. Se observă o corelație aproape perfectă (≈1.00) între AQI_Value, PM25_Value și VOCs, indicând redundanță informațională. În schimb, NO2_Value are corelații apropiate de 0 cu toate celelalte atribute, sugerând că este independent din punct de vedere liniar față de restul.
+This matrix highlights the linear correlations between the continuous numerical attributes in the Air dataset. There is an almost perfect correlation (≈1.00) between AQI_Value, PM25_Value, and VOCs, indicating informational redundancy. In contrast, NO2_Value has correlations close to 0 with all other attributes, suggesting that it is linearly independent from the rest.
 
 ![alt text](images/air_polution/correlation/correlation_ordinal_matrix.png)
 
-Matricea arată valorile p obținute în urma testului Chi-pătrat aplicat perechilor de variabile categorice. Valori apropiate de 0 indică o asociere statistic semnificativă (corelație), iar valorile mari (ex. CO_Category și NO2_Category) sugerează lipsa de asociere. De exemplu, AQI_Category are legături semnificative cu toate celelalte atribute, ceea ce reflectă importanța sa centrală în evaluarea calității aerului.
-
+The matrix shows the p-values obtained from the Chi-square test applied to pairs of categorical variables. Values close to 0 indicate a statistically significant association (correlation), while high values (e.g., CO_Category and NO2_Category) suggest a lack of association. For example, AQI_Category has significant links to all other attributes, reflecting its central importance in air quality assessment.
 
 ### News pollution
-#### Tipul atributelor 
-Având în vedere tipul valorilor pe care le conțin și intervalele în care acestea variază, atributele din setul de date pot fi clasificate în următoarele categorii: (se ignora `url`)
-- atribute continue: ` days_since_published`, ` content_word_count`, ` unique_word_ratio`, ` non_stop_word_ratio`, ` unique_non_stop_ratio`, ` external_links`, ` internal_links`, ` image_count`, ` video_count`, ` keyword_worst_min_shares`, ` keyword_worst_max_shares`, ` keyword_worst_avg_shares`, ` keyword_best_min_shares`, ` keyword_best_max_shares`, ` keyword_best_avg_shares`, ` keyword_avg_min_shares`, ` keyword_avg_max_shares`, ` keyword_avg_avg_shares`, ` ref_min_shares`, ` ref_max_shares`, ` ref_avg_shares`, ` engagement_ratio`, ` content_density` (numerice, valori unice > 20, range de valori > 50)
-- atribute discrete: ` title_word_count`, ` avg_word_length`, ` keyword_count`, ` topic_0_relevance`, ` topic_1_relevance`, ` topic_2_relevance`, ` topic_3_relevance`, ` topic_4_relevance`, ` content_subjectivity`, ` content_sentiment`, ` positive_word_rate`, ` negative_word_rate`, ` non_neutral_positive_rate`, ` non_neutral_negative_rate`, ` avg_positive_sentiment`, ` min_positive_sentiment`, ` max_positive_sentiment`, ` avg_negative_sentiment`, ` min_negative_sentiment`, ` max_negative_sentiment`, ` title_subjectivity`, ` title_sentiment`, ` title_subjectivity_magnitude`, ` title_sentiment_magnitude` (numerice, restul)
-- atribute ordinale: `popularity_category` (contin obiecte ordonate: Slightly Popular, Moderatately Popular)
-- atribute categorice: ` channel_lifestyle`, ` channel_entertainment`, ` channel_business`, ` channel_social_media`, ` channel_tech`, ` channel_world`, ` day_monday`, ` day_tuesday`, ` day_wednesday`, ` day_thursday`, ` day_friday`, ` day_saturday`, ` day_sunday`, ` is_weekend`, ` publication_period` (restul de obiecte)
+#### Attribute type
+Given the type of values they contain and the ranges in which they vary, the attributes in the dataset can be classified into the following categories: (ignore `url`)
+- continuous attributes: ` days_since_published`, ` content_word_count`, ` unique_word_ratio`, ` non_stop_word_ratio`, ` unique_non_stop_ratio`, `external_links`, `internal_links`, `image_count`, `video_count`, `keyword_worst_min_shares`, `keyword_worst_max_shares`, `keyword_worst_avg_shares`, `keyword_best_min_shares`, `keyword_best_max_shares`, `keyword_best_avg_shares`, `keyword_avg_min_shares`, ` keyword_avg_max_shares`, ` keyword_avg_avg_shares`, ` ref_min_shares`, ` ref_max_shares`, ` ref_avg_shares`, ` engagement_ratio`, ` content_density` (numeric, unique values > 20, value range > 50)
+- discrete attributes: ` title_word_count`, ` avg_word_length`, ` keyword_count`, ` topic_0_relevance`, ` topic_1_relevance`, ` topic_2_relevance`, ` topic_3_relevance`, ` topic_4_relevance`, ` content_subjectivity`, ` content_sentiment`, ` positive_word_rate`, ` negative_word_rate`, ` non_neutral_positive_rate`, `non_neutral_negative_rate`, `avg_positive_sentiment`, `min_positive_sentiment`, `max_positive_sentiment`, `avg_negative_sentiment`, `min_negative_sentiment`, `max_negative_sentiment`, `title_subjectivity`, `title_sentiment`, `title_subjectivity_magnitude`, `title_sentiment_magnitude` (numeric, rest)
+- ordinal attributes: `popularity_category` (contains ordered objects: Slightly Popular, Moderately Popular)
+- categorical attributes: `channel_lifestyle`, `channel_entertainment`, `channel_business`, `channel_social_media`, `channel_tech`, `channel_world`, `day_monday`, `day_tuesday`, `day_wednesday`, `day_thursday`, `day_friday`, `day_saturday`, `day_sunday`, `is_weekend`, `publication_period` (rest of objects)
 
-#### Atribute numerice continue analiza
+#### Continuous numerical attributes analysis
 | Attribute                  | Count     | Mean       | Std Dev   | Min       | 25%       | 50%       | 75%       | Max         |
 |----------------------------|-----------|------------|-----------|-----------|-----------|-----------|-----------|-------------|
 | days_since_published       | 39644.0   | 354.53     | 214.16    | 8.00      | 164.00    | 339.00    | 542.00    | 731.00      |
@@ -129,9 +127,9 @@ Având în vedere tipul valorilor pe care le conțin și intervalele în care ac
 
 ![alt text](images/news_popularity/boxplot/boxplot_cont_feat_news.png)
 
-Boxplot-ul pentru setul News Popularity arată o variabilitate mare între atribute, unele dintre ele având valori extrem de ridicate (peste 800.000), precum `keyword_best_max_shares` sau `ref_max_shares`. Multe dintre atribute sunt puternic dezechilibrate, cu mediane joase și prezența unor outlieri extremi. Acest lucru sugerează că este necesară o etapă de tratare a valorilor extreme și o eventuală standardizare a datelor pentru a evita influențarea algoritmilor de ML.
+The boxplot for the News Popularity set shows high variability between attributes, with some of them having extremely high values (over 800,000), such as `keyword_best_max_shares` or `ref_max_shares`. Many of the attributes are highly unbalanced, with low medians and the presence of extreme outliers. This suggests that a stage of treating extreme values and possibly standardizing the data is necessary to avoid influencing the ML algorithms.
 
-#### Atribute ordinale/catgorice analiza
+#### Ordinal/categorical attributes analysis
 
 - channel_business — Number of non-null examples: 39644
 - channel_business — Number of unique values: 2
@@ -161,8 +159,7 @@ Boxplot-ul pentru setul News Popularity arată o variabilitate mare între atrib
 - channel_world — Number of unique values: 2
 ![alt text](<images/news_popularity/histogram/histogram_categ_feat_news_ channel_world.png>)
 
-Atributele binare precum channel_business, channel_entertainment, channel_lifestyle, channel_social_media, channel_tech, channel_world arată dacă un articol aparține unui anumit canal tematic. Distribuția este dezechilibrată în toate cazurile: predomină valorile 'N' (nu aparține canalului), iar doar o fracțiune relativ mică sunt articole marcate cu 'Y' (da). Acest lucru poate influența performanța clasificatorilor, deoarece modelul învață mai greu din clasele rare.
-
+Binary attributes such as channel_business, channel_entertainment, channel_lifestyle, channel_social_media, channel_tech, channel_world indicate whether an article belongs to a particular thematic channel. The distribution is unbalanced in all cases: 'N' values (does not belong to the channel) predominate, and only a relatively small fraction of articles are marked with 'Y' (yes). This can influence the performance of classifiers, as the model learns more slowly from rare classes.
 
 - day_monday — Number of non-null examples: 39644
 - day_monday — Number of unique values: 2
@@ -199,57 +196,56 @@ Atributele binare precum channel_business, channel_entertainment, channel_lifest
 ![alt text](<images/news_popularity/histogram/histogram_categ_feat_news_ is_weekend.png>)
 
 
-Atributele binare de tipul day_monday, day_friday, day_saturday etc. indică dacă articolul a fost publicat într-o anumită zi. Distribuția este tot dezechilibrată — majoritatea valorilor sunt 'N', în timp ce 'Y' apare doar când articolul a fost publicat în acea zi. Se observă o ușoară variație între zilele săptămânii și weekend.
+Binary attributes such as day_monday, day_friday, day_saturday, etc. indicate whether the article was published on a specific day. The distribution is also unbalanced—most values are 'N', while 'Y' only appears when the article was published on that day. There is a slight variation between weekdays and weekends.
 
 - publication_period — Number of non-null examples: 39644
 - publication_period — Number of unique values: 2
 ![alt text](<images/news_popularity/histogram/histogram_categ_feat_news_ publication_period.png>)
 
-Majoritatea articolelor sunt publicate în timpul săptămânii (Weekday), cu o proporție mai mică în Weekend.
+Most articles are published during the week (Weekday), with a smaller proportion on the Weekend.
 
 - popularity_category — Number of non-null examples: 39644
 - popularity_category — Number of unique values: 5
 ![alt text](images/news_popularity/histogram/histogram_categ_feat_news_popularity_category.png)
 
-Cea mai frecventă clasă este Slightly Popular, urmată de Moderately Popular. Clasele extreme, precum Very Unpopular, sunt rare, ceea ce sugerează o etichetare dezechilibrată și potențială dificultate în clasificare.
+The most common class is Slightly Popular, followed by Moderately Popular. Extreme classes, such as Very Unpopular, are rare, suggesting unbalanced labeling and potential difficulty in classification.
 
-#### Echilibrul Claselor
+#### Class Balance
 ![alt text](images/news_popularity/boxplot/boxplot_classes_unpopular-popular.png)
 
-Graficul arată un dezechilibru semnificativ între clase: cele mai multe articole sunt etichetate ca Slightly Popular și Moderately Popular, în timp ce clasele extreme (Very Unpopular, Popular) sunt subreprezentate. Acest dezechilibru poate afecta algoritmii de clasificare, care tind să favorizeze clasele dominante.
+The graph shows a significant imbalance between classes: most articles are labeled as Slightly Popular and Moderately Popular, while the extreme classes (Very Unpopular, Popular) are underrepresented. This imbalance can affect classification algorithms, which tend to favor dominant classes.
 
 ![alt text](images/news_popularity/boxplot/boxplot_classes_weekday-weekend.png)
 
-Majoritatea articolelor sunt publicate în timpul săptămânii (Weekday), ceea ce reflectă o practică obișnuită în media online. Articolele din Weekend reprezintă un procent mult mai mic, sugerând un potențial efect de sezon sau comportament diferit al publicului.
+Most articles are published during the week (Weekday), which reflects common practice in online media. Weekend articles represent a much smaller percentage, suggesting a potential seasonal effect or different audience behavior.
 
 ![alt text](images/news_popularity/boxplot/boxplot_classes_yes-no_combined.png)
 
-Distribuția totală a valorilor Y și N pentru toate coloanele binare (precum channel_*, day_*) este profund dezechilibrată în favoarea valorii N. Asta indică faptul că articolele aparțin rar unui canal sau unei zile anume. Acest dezechilibru trebuie tratat cu atenție în modelele de clasificare (ex. prin ponderare sau sampling).
+The total distribution of Y and N values for all binary columns (such as channel_*, day_*) is deeply skewed towards the value N. This indicates that articles rarely belong to a specific channel or day. This imbalance must be carefully addressed in classification models (e.g., through weighting or sampling).
 
-
-#### Corelatia intre atribute
+#### Correlation between attributes
 
 ![alt text](images/news_popularity/correlation/correlation_cont_matrix_news.png)
-Această matrice arată corelațiile Pearson între atributele numerice continue. Se observă corelații foarte puternice între:
-`content_word_count` și `content_density` (0.97) – articolele mai lungi tind să aibă o densitate de conținut mai mare.
-Variabilele privind partajările (shares) ale cuvintelor cheie (keyword_*) sunt corelate pozitiv între ele (valori între 0.4 și 0.8).
-`ref_avg_shares` și `ref_max_shares` sau `ref_min_shares` sunt, de asemenea, corelate moderat spre puternic.
-În general, există grupuri clare de variabile corelate, utile pentru reducerea dimensionalității sau selecția atributelor.
+This matrix shows Pearson correlations between continuous numerical attributes. Very strong correlations can be observed between:
+`content_word_count` and `content_density` (0.97) – longer articles tend to have higher content density.
+The variables related to keyword shares (keyword_*) are positively correlated with each other (values between 0.4 and 0.8).
+`ref_avg_shares` and `ref_max_shares` or `ref_min_shares` are also moderately to strongly correlated.
+In general, there are clear groups of correlated variables, useful for dimensionality reduction or attribute selection.
 
 
 ![alt text](images/news_popularity/correlation/correlation_ordinal_matrix.png)
-Această matrice exprimă semnificația statistică a relației dintre atributele categorice (inclusiv cele ordinale), folosind testul Chi-pătrat (p-value).
-Valorile apropiate de 0 (culoare galbenă intensă) indică o relație semnificativă statistic între variabile.
-Se observă corelații puternice între:
-Zilele săptămânii (`day_monday`, `day_tuesday`, etc.) și `is_weekend` sau `publication_period`.
-Canalele (`channel_*`) și `publication_period`, sugerând că unele tipuri de conținut sunt mai frecvente în anumite perioade.
-`popularity_category` este semnificativ asociat cu majoritatea celorlalte variabile categorice, sugerând că popularitatea articolelor este influențată de mulți factori discreți.
+This matrix expresses the statistical significance of the relationship between categorical attributes (including ordinal ones) using the Chi-square test (p-value).
+Values close to 0 (bright yellow) indicate a statistically significant relationship between variables.
+Strong correlations can be observed between:
+Days of the week (`day_monday`, `day_tuesday`, etc.) and `is_weekend` or `publication_period`.
+Channels (`channel_*`) and `publication_period`, suggesting that some types of content are more common in certain periods.
+`popularity_category` is significantly associated with most other categorical variables, suggesting that the popularity of articles is influenced by many discrete factors.
 
 
-## Preprocesare Date
+## Data Preprocessing
 ### Air pollution data set
 
-#### Atribute cu date lipsa si imputarea lor
+#### Attributes with missing data and their imputation
 Atributes with missing values:
 CO_Category    1893
 Ozone_Value    1870
@@ -260,7 +256,7 @@ CO_Category    0
 Ozone_Value    0
 Country        0
 
-#### Valorile extreme si inlocuirea acestora cu cele din imputare
+#### Extreme values and their replacement with those in the allocation
 [Train] AQI_Value: 2354 outliers replaced with NaN
 [Train] CO_Value: 6858 outliers replaced with NaN
 [Train] Ozone_Value: 1219 outliers replaced with NaN
@@ -280,15 +276,15 @@ Replacing outliers with NaN in airDataTest using train IQR...
 
 Outliers replaced with NaN and imputed with column mean.
 
-#### Variabile redundante
+#### Redundant variables
 Removed redundant features: ['VOCs', 'PM25_Value', 'CO_Category', 'Ozone_Category', 'NO2_Category', 'PM25_Category', 'Emissions', 'City', 'Country']
 
-#### Standardizare
-Pentru ca Regresia Logistica sa functioneze se standardizeaza valorile atributelor numerice
+#### Standardization
+For Logistic Regression to work, the values of numerical attributes are standardized.
 
 ### News pollution data set
 
-#### Atribute cu date lipsa si imputarea lor
+#### Attributes with missing data and their imputation
 Atributes with missing values:
 channel_lifestyle    3175
 content_density      3145
@@ -298,7 +294,7 @@ channel_lifestyle    0
 content_density      0
 
 
-#### Valorile extreme si inlocuirea acestora cu cele din imputare
+#### Extreme values and their replacement with those in the allocation
 [Train]  days_since_published: 0 outliers replaced with NaN
 [Train]  title_word_count: 123 outliers replaced with NaN
 [Train]  content_word_count: 1539 outliers replaced with NaN
@@ -398,15 +394,15 @@ Replacing outliers with NaN in newsDataTrain using train IQR...
 
 Outliers replaced with NaN and imputed with column mean.
 
-#### Variabile redundante
+#### Redundant variables
 Removed redundant features: ['content_density', 'non_stop_word_ratio', 'unique_non_stop_ratio', 'keyword_best_avg_shares', 'keyword_avg_avg_shares', 'ref_avg_shares', 'publication_period', 'is_weekend', 'channel_business', 'channel_entertainment', 'channel_lifestyle', 'channel_social_media', 'channel_tech', 'channel_world', 'day_monday', 'day_tuesday', 'day_wednesday', 'day_thursday', 'day_friday', 'day_saturday', 'day_sunday']
 
-#### Standardizare
-Pentru ca Regresia Logistica sa functioneze se standardizeaza valorile atributelor numerice
+#### Standardization
+For Logistic Regression to work, the values of numerical attributes are standardized.
 
-## Algoritmi
+## Algorithms
 ### Air pollution data set
-#### Arbori de decizie
+#### Decision trees
 
 ![alt text](images/air_polution/algorithms/decision_tree_air.png)
 
@@ -425,16 +421,16 @@ Classification Report — Decision Tree
 | **Weighted Avg**                 | 0.89      | 0.89   | 0.88     | 4693    |
 Accuracy (Decision Tree): 0.8886
 
-Un model de arbore de decizie folosind biblioteca scikit-learn, cu scopul de a prezice categoria calității aerului (AQI_Category).
-Modelul a fost antrenat pe setul de date procesat (X_train, y_train), cu următorii hiperparametri:
-- Criteriu: entropy — pentru a maximiza informația câștigată la fiecare split
-- Adâncime maximă (max_depth): 4 — pentru a evita suprapotrivirea
-- Număr minim de exemple într-o frunză (min_samples_leaf): 5 — pentru a evita frunze rare
-- Ponderare a claselor (class_weight): balanced — pentru a contracara distribuția dezechilibrată a claselor
+A decision tree model using the scikit-learn library, with the aim of predicting air quality category (AQI_Category).
+The model was trained on the processed dataset (X_train, y_train), with the following hyperparameters:
+- Criterion: entropy — to maximize the information gained at each split
+- Maximum depth (max_depth): 4 — to avoid overfitting
+- Minimum number of examples in a leaf (min_samples_leaf): 5 — to avoid sparse leaves
+- Class weighting (class_weight): balanced — to counteract the unbalanced distribution of classes
 
-Deși modelul obține o acuratețe generală ridicată (88.86%), scorurile de precizie și recall pentru clasele subreprezentate (ex. „Hazardous”, „Unhealthy”) sunt foarte mici. Aceasta indică faptul că modelul tinde să favorizeze clasele frecvente, fiind ineficient în identificarea corectă a celor rare. Într-un context real, acest lucru poate fi problematic dacă aceste clase reprezintă condiții critice.
+Although the model achieves high overall accuracy (88.86%), the precision and recall scores for underrepresented classes (e.g., "Hazardous," "Unhealthy") are very low. This indicates that the model tends to favor frequent classes and is inefficient at correctly identifying rare ones. In a real-world context, this can be problematic if these classes represent critical conditions.
 
-#### Paduri Aleatoare
+#### Random Forests
 
 ![alt text](images/air_polution/algorithms/decision_tree_air.png)
 
@@ -452,19 +448,19 @@ Deși modelul obține o acuratețe generală ridicată (88.86%), scorurile de pr
 | **Weighted Avg**                 | 0.96      | 0.89   | 0.91     | 4693    |
 Accuracy (Random Forest): 0.8881
 
-Un model Random Forest a fost antrenat folosind biblioteca scikit-learn pentru a prezice categoria calității aerului (AQI_Category). Modelul a fost antrenat pe datele procesate (X_train, y_train) și a utilizat următorii hiperparametri:
+A Random Forest model was trained using the scikit-learn library to predict air quality category (AQI_Category). The model was trained on the processed data (X_train, y_train) and used the following hyperparameters:
 
-- Criteriu: entropy — maximizează câștigul informațional la fiecare split;
-- Adâncime maximă (max_depth): 4 — limitează complexitatea fiecărui arbore pentru a preveni suprapotrivirea;
-- Număr minim de exemple într-o frunză (min_samples_leaf): 5 — previne formarea frunzelor cu puține instanțe;
-- Ponderare a claselor (class_weight): balanced — ajustează automat greutățile în funcție de distribuția claselor, fiind util pentru seturi dezechilibrate;
-- Număr de estimatori (n_estimators): 100 — utilizează 100 de arbori de decizie individuali;
-- Proporție de eșantion pentru fiecare estimator: implicită (bootstrap=True) — fiecare arbore este antrenat pe un subset bootstrap diferit al datelor;
-- Proporție de atribute utilizate de fiecare arbore: implicită (max_features='sqrt') — fiecare arbore selectează aleator √n atribute la fiecare split, ceea ce ajută la reducerea corelației dintre arbori și îmbunătățirea generalizării.
+- Criterion: entropy — maximizes information gain at each split;
+- Maximum depth (max_depth): 4 — limits the complexity of each tree to prevent overfitting;
+- Minimum number of examples in a leaf (min_samples_leaf): 5 — prevents the formation of leaves with few instances;
+- Class weighting (class_weight): balanced — automatically adjusts weights according to class distribution, which is useful for unbalanced sets;
+- Number of estimators (n_estimators): 100 — uses 100 individual decision trees;
+- Sample proportion for each estimator: default (bootstrap=True) — each tree is trained on a different bootstrap subset of the data;
+- Proportion of attributes used by each tree: default (max_features='sqrt') — each tree randomly selects √n attributes at each split, which helps reduce correlation between trees and improve generalization.
 
-Modelul obține o acuratețe globală de 88.9%, dar performanța pe clasele dezechilibrate rămâne limitată. De exemplu, pentru clasa „Hazardous”, modelul are un scor de recall de 71%, dar precizia este doar 8%, indicând un număr ridicat de fals pozitive. De asemenea, clase precum „Unhealthy” sau „Very Unhealthy” au dificultăți în a fi clasificate corect.Această situație sugerează că, deși Random Forest îmbunătățește ușor performanțele față de arborele de decizie simplu, provocările legate de dezechilibrul claselor persistă. În aplicații critice (ex. poluare extremă), aceste limitări pot afecta capacitatea sistemului de a reacționa adecvat la condiții periculoase.
+The model achieves an overall accuracy of 88.9%, but performance on imbalanced classes remains limited. For example, for the "Hazardous" class, the model has a recall score of 71%, but the precision is only 8%, indicating a high number of false positives. Also, classes such as "Unhealthy" or "Very Unhealthy" have difficulty being classified correctly. This situation suggests that, although Random Forest slightly improves performance over the simple decision tree, challenges related to class imbalance persist. In critical applications (e.g., extreme pollution), these limitations can affect the system's ability to respond appropriately to dangerous conditions.
 
-#### Regresie Logistica
+#### Logistic Regression
 
 ![alt text](images/air_polution/algorithms/logistic_regression_air.png)
 
@@ -483,20 +479,20 @@ Modelul obține o acuratețe globală de 88.9%, dar performanța pe clasele deze
 
 Accuracy (Logistic Regression): 0.6953
 
-Un model de regresie logistică a fost implementat manual și antrenat pentru a clasifica calitatea aerului (AQI_Category) folosind un optimizator de tip gradient descent. Acest model a fost testat pe un set de date cu mai multe clase, inclusiv „Good”, „Moderate”, „Unhealthy” și „Hazardous”. Pentru preprocesarea datelor:
-- Atributele categorice au fost transformate folosind One-Hot Encoding, aplicat exclusiv pe coloanele cu cardinalitate redusă (prin ColumnTransformer).
-- Atributele numerice au fost păstrate nemodificate (remainder='passthrough').
-Algoritmul de optimizare a utilizat:
-- Gradient Descent full-batch
+A logistic regression model was manually implemented and trained to classify air quality (AQI_Category) using a gradient descent optimizer. This model was tested on a dataset with multiple classes, including "Good," "Moderate," "Unhealthy," and "Hazardous." For data preprocessing:
+- Categorical attributes were transformed using One-Hot Encoding, applied exclusively to columns with low cardinality (via ColumnTransformer).
+- Numeric attributes were kept unchanged (remainder='passthrough').
+The optimization algorithm used:
+- Full-batch Gradient Descent
 - Learning rate: 0.1
-- Număr epoci: 3000
-- Inițializare greutăți: distribuție normală (N(0,1))
-- Regularizare: L2 (cu λ = 0.01) pentru a penaliza coeficienții mari și a reduce overfitting-ul
-Modelul a obținut o acuratețe globală de 69.5%, ceea ce indică un rezultat rezonabil pentru un model liniar aplicat pe un set dezechilibrat.
-Cu toate acestea, performanța per clasă evidențiază limitele:
-- Clasa „Good” este clasificată excelent (recall 100%, f1-score 0.90)
-- Clasele „Very Unhealthy” și „Hazardous” nu sunt identificate corect (precizie și recall 0), din cauza dezechilibrului și a numărului redus de exemple
-Această distribuție sugerează că regresia logistică are dificultăți în a separa corect clasele mai rare sau care se suprapun în spațiul atributelor. Pentru aplicații critice de mediu, acest lucru limitează utilitatea modelului fără metode suplimentare de balansare.
+- Number of epochs: 3000
+- Weight initialization: normal distribution (N(0,1))
+- Regularization: L2 (with λ = 0.01) to penalize large coefficients and reduce overfitting
+The model achieved an overall accuracy of 69.5%, which is a reasonable result for a linear model applied to an unbalanced set.
+However, the performance per class highlights the limitations:
+- The "Good" class is classified excellently (recall 100%, f1-score 0.90)
+- The "Very Unhealthy" and "Hazardous" classes are not correctly identified (accuracy and recall 0) due to the imbalance and the small number of examples
+This distribution suggests that logistic regression has difficulty correctly separating rarer classes or those that overlap in the attribute space. For critical environmental applications, this limits the usefulness of the model without additional balancing methods.
 
 #### MLP
 
@@ -516,30 +512,30 @@ Această distribuție sugerează că regresia logistică are dificultăți în a
 | **Weighted Avg**                 | 0.95      | 0.96   | 0.95     | 4693    |
 Accuracy (MLP): 0.9593
 
-Un model de rețea neurală de tip MLP (Multi-Layer Perceptron) a fost antrenat pentru a prezice clasa de calitate a aerului (AQI_Category). Modelul a fost antrenat pe setul de date procesat cu următorii hiperparametri:
-- Arhitectură: un singur strat ascuns cu 100 de neuroni
-- Funcția de activare: ReLU
+An MLP (Multi-Layer Perceptron) neural network model was trained to predict air quality class (AQI_Category). The model was trained on the processed dataset with the following hyperparameters:
+- Architecture: a single hidden layer with 100 neurons
+- Activation function: ReLU
 
-- Optimizator: Adam
+- Optimizer: Adam
 - Learning rate: 0.001
-- Număr maxim de epoci: 200
+- Maximum number of epochs: 200
 
-- Criteriu de oprire timpurie (early_stopping=True) pentru prevenirea suprapotrivirii
-- Coeficient de regularizare: alpha=0.0001
+- Early stopping criterion (early_stopping=True) to prevent overfitting
+- Regularization coefficient: alpha=0.0001
 
-Modelul a atins o acuratețe globală ridicată de 95.93%, dar performanța este puternic dezechilibrată între clase:
-- Clasele majore precum Good, Moderate sau Unhealthy for Sensitive Groups sunt clasificate corect în proporție foarte mare.
-- Clasele rare precum Hazardous și Very Unhealthy au precizie și recall 0, ceea ce înseamnă că modelul nu le identifică deloc corect.
-- Clasa Unhealthy are un recall foarte bun (0.99), dar o precizie scăzută (0.72), ceea ce indică existența multor fals pozitive.
+The model achieved a high overall accuracy of 95.93%, but performance is heavily skewed between classes:
+- Major classes such as Good, Moderate, or Unhealthy for Sensitive Groups are classified correctly in a very high proportion.
+- Rare classes such as Hazardous and Very Unhealthy have 0 precision and recall, which means that the model does not identify them correctly at all.
+- The Unhealthy class has very good recall (0.99) but low precision (0.72), indicating the existence of many false positives.
 
-Modelul este eficient în identificarea claselor frecvente, dar insuficient pentru aplicații critice unde recunoașterea corectă a stărilor periculoase (ex. Hazardous) este esențială.
+The model is effective in identifying frequent classes, but insufficient for critical applications where correct recognition of dangerous conditions (e.g., Hazardous) is essential.
 
 ![alt text](images/air_polution/algorithms/mlp_loss_curve.png)
 
 ![alt text](images/air_polution/algorithms/mlp_accuracy_curve.png)
 
 ### News pollution data set
-#### Arbori de decizie
+#### Decision trees
 
 ![alt text](images/news_popularity/algorithms/decision_tree_news.png)
 
@@ -555,18 +551,18 @@ Modelul este eficient în identificarea claselor frecvente, dar insuficient pent
 | **Macro avg**       | 0.73      | 0.69   | 0.66     | 7929    |
 | **Weighted avg**    | 0.83      | 0.81   | 0.81     | 7929    |
 
-Modelul de arbore de decizie antrenat pentru clasificarea popularității știrilor a atins o acuratețe generală de 81.35%, un scor foarte bun având în vedere numărul de clase și natura dezechilibrată a setului de date.
-- Clasele „Slightly Popular”, „Moderately Popular” și „Popular” sunt bine clasificate, cu f1-scores de peste 0.70 și recall ridicat.
-- Clasa „Unpopular”, deși are un număr mic de exemple, este surprinzător de bine captată (recall 0.80), dar cu precizie slabă (0.33), ceea ce indică multe false positive.
-- Clasa „Viral” este mai dificil de identificat: are o precizie bună (0.84), dar un recall foarte mic (0.24), ceea ce sugerează că modelul tinde să fie conservator și să nu clasifice decât foarte puține articole drept virale — ceea ce poate fi acceptabil dacă se dorește evitarea alarmelor false.
-Modelul a fost antrenat cu hiperparametri aleși atent:
-- max_depth=20 pentru flexibilitate crescută,
-- min_samples_leaf=2 pentru a reduce overfitting,
-- class_weight='balanced' pentru a trata dezechilibrul dintre clase.
+The decision tree model trained to classify news popularity achieved an overall accuracy of 81.35%, a very good score considering the number of classes and the unbalanced nature of the dataset.
+The "Slightly Popular," "Moderately Popular," and "Popular" classes are well classified, with f1-scores above 0.70 and high recall.
+- The "Unpopular" class, although it has a small number of examples, is surprisingly well captured (recall 0.80), but with poor accuracy (0.33), indicating many false positives.
+- The "Viral" class is more difficult to identify: it has good accuracy (0.84) but very low recall (0.24), suggesting that the model tends to be conservative and classify very few articles as viral — which may be acceptable if false alarms are to be avoided.
+The model was trained with carefully chosen hyperparameters:
+- max_depth=20 for increased flexibility,
+- min_samples_leaf=2 to reduce overfitting,
+- class_weight='balanced' to address class imbalance.
 
-Astfel, modelul oferă o performanță solidă și este potrivit ca soluție de bază pentru predicția popularității știrilor. Clasele extreme, cum ar fi „Viral” sau „Unpopular”, pot fi îmbunătățite suplimentar prin oversampling, ensemble methods sau modele mai complexe precum Random Forest sau MLP.
+Thus, the model offers solid performance and is suitable as a basic solution for predicting news popularity. Extreme classes, such as "Viral" or "Unpopular," can be further improved through oversampling, ensemble methods, or more complex models such as Random Forest or MLP.
 
-#### Paduri Aleatoare
+#### Random Forests
 
 ![alt text](images/news_popularity/algorithms/random_forest_news.png)
 
@@ -583,20 +579,20 @@ Astfel, modelul oferă o performanță solidă și este potrivit ca soluție de 
 | **Weighted avg**    | 0.83      | 0.81   | 0.81     | 7929    |
 Accuracy (Random Forest): 0.8135
 
-Modelul Random Forest a obținut o acuratețe generală de 81.35% în clasificarea popularității articolelor de știri, oferind rezultate aproape identice cu arborele de decizie individual, dar cu un plus de robustețe și stabilitate.
-- Performanța este foarte bună pentru clasele „Slightly Popular”, „Moderately Popular” și „Popular”, care reprezintă majoritatea setului. Acestea au f1-score-uri de peste 0.70 și un recall foarte ridicat.
-- Clasa „Unpopular” este captată bine în recall (0.80), dar suferă la precizie (0.33), ceea ce sugerează un număr mare de clasificări false pozitive.
-- Clasa „Viral” are din nou dificultăți de identificare, cu un recall de doar 0.24, deși precizia este bună (0.84), similar cu Decision Tree.
+The Random Forest model achieved an overall accuracy of 81.35% in classifying the popularity of news articles, providing results almost identical to the individual decision tree, but with added robustness and stability.
+- Performance is very good for the "Slightly Popular," "Moderately Popular," and "Popular" classes, which represent the majority of the set. These have f1-scores above 0.70 and a very high recall.
+- The "Unpopular" class is well captured in recall (0.80), but suffers in accuracy (0.33), suggesting a large number of false positive classifications.
+- The "Viral" class again has identification difficulties, with a recall of only 0.24, although the precision is good (0.84), similar to Decision Tree.
 
-Modelul a fost antrenat cu următorii hiperparametri:
-- n_estimators=100: o pădure de 100 de arbori,
-- max_depth=20: pentru a permite învățarea relațiilor complexe,
-- min_samples_leaf=2: pentru a reduce overfitting-ul pe frunze mici,
-- criterion='entropy': pentru a maximiza câștigul informațional,- class_weight='balanced': pentru a contrabalansa distribuția inegală a claselor.
+The model was trained with the following hyperparameters:
+- n_estimators=100: a forest of 100 trees,
+- max_depth=20: to allow learning complex relationships,
+- min_samples_leaf=2: to reduce overfitting on small leaves,
+- criterion='entropy': to maximize information gain, - class_weight='balanced': to counterbalance the uneven distribution of classes.
 
-Astfel, Random Forest este un model solid pentru această sarcină, oferind un echilibru foarte bun între precizie și generalizare. Pentru clasele subreprezentate, performanța poate fi îmbunătățită prin tehnici de oversampling, creșterea numărului de estimatori sau ajustarea ponderii claselor.
+Thus, Random Forest is a solid model for this task, offering a very good balance between accuracy and generalization. For underrepresented classes, performance can be improved by oversampling techniques, increasing the number of estimators, or adjusting class weights.
 
-#### Regresie Logistica
+#### Logistic Regression
 
 ![alt text](images/news_popularity/algorithms/logistic_regression_news.png)
 
@@ -614,20 +610,20 @@ Astfel, Random Forest este un model solid pentru această sarcină, oferind un e
 
 Accuracy (Manual Logistic Regression): 0.4777
 
-Pentru problema clasificării popularității știrilor, a fost implementat un model de regresie logistică multi-clasă, folosind o strategie One-vs-Rest (OvR). Aceasta presupune antrenarea câte unui model logistic binar pentru fiecare clasă posibilă, modelând fiecare „vs restul”.
-Encodare: Atributele categorice au fost prelucrate prin One-Hot Encoding (doar pentru cele cu cardinalitate redusă), folosind ColumnTransformer. Atributele numerice au fost păstrate nealterate.
-Optimizare:
-- Algoritm: Gradient Descent standard
+For the problem of classifying news popularity, a multi-class logistic regression model was implemented using a One-vs-Rest (OvR) strategy. This involves training a binary logistic model for each possible class, modeling each "vs the rest."
+Encoding: Categorical attributes were processed using One-Hot Encoding (only for those with low cardinality), using ColumnTransformer. Numerical attributes were kept unchanged.
+Optimization:
+- Algorithm: Standard Gradient Descent
 - Learning rate: 0.1
-- Număr epoci: 3000
-- Regularizare L2: λ = 0.01
-Fiecare model binar din OvR a fost antrenat independent, iar la inferență, scorurile de probabilitate pentru fiecare clasă au fost comparate pentru a alege predicția finală.
-Modelul a obținut o acuratețe globală de 47.7%, semnificativ mai bună decât o clasificare aleatorie, dar cu performanțe neuniforme:
-- Clasele „Moderately Popular” și „Slightly Popular” sunt cele mai bine clasificate (recall 72% și 52%)
-- Clasele „Popular” și „Viral” sunt adesea confundate cu clasele dominante
-- Clasa „Unpopular” are precizie și recall aproape 0, sugerând confuzie sistematică cu clasele apropiate
+- Number of epochs: 3000
+- L2 regularization: λ = 0.01
+Each binary model in OvR was trained independently, and at inference, the probability scores for each class were compared to choose the final prediction.
+The model achieved an overall accuracy of 47.7%, significantly better than random classification, but with uneven performance:
+- The "Moderately Popular" and "Slightly Popular" classes are the best classified (recall 72% and 52%)
+- The "Popular" and "Viral" classes are often confused with the dominant classes
+- The "Unpopular" class has accuracy and recall close to 0, suggesting systematic confusion with nearby classes
 
-Distribuția rezultatelor sugerează că, deși OvR permite aplicarea regresiei logistice la clasificare multi-clasă, separabilitatea liniară limitată și dezechilibrul între clase afectează puternic performanța.
+The distribution of results suggests that, although OvR allows the application of logistic regression to multi-class classification, limited linear separability and imbalance between classes strongly affect performance.
 
 #### MLP
 
@@ -641,29 +637,29 @@ Distribuția rezultatelor sugerează că, deși OvR permite aplicarea regresiei 
 | Unpopular           | 0.65      | 0.22   | 0.33     | 218     |
 | Viral               | 0.17      | 0.13   | 0.15     | 437     |
 
-Un model MLP (Multi-Layer Perceptron) a fost antrenat folosind biblioteca scikit-learn pentru a prezice categoria de popularitate a articolelor de știri (popularity_category). Modelul a fost antrenat pe datele procesate (X_train, y_train) și a utilizat următorii hiperparametri:
-Arhitectura:
-- Straturi ascunse (hidden_layer_sizes): două straturi ascunse cu 256 și 128 de neuroni;
-- Funcție de activare (activation): relu, aleasă pentru eficiența sa în propagarea gradientului și învățarea non-liniară.
-Optimizare:
-- Algoritm (solver): adam, optimizator eficient pentru date mari și sparse;
-- Rată de învățare (learning_rate_init): 0.001 — valoare implicită adecvată pentru stabilitate;
-- Număr maxim de epoci (max_iter): 3000 — permite rețelei suficiente cicluri de antrenament pentru convergență.
-Regularizare:
-- Early stopping: activat (early_stopping=True) — antrenarea se oprește când performanța de validare nu mai crește;
-- Regularizare L2 (alpha): 0.0001 — previne suprapotrivirea penalizând ponderile mari.
+An MLP (Multi-Layer Perceptron) model was trained using the scikit-learn library to predict the popularity category of news articles (popularity_category). The model was trained on the processed data (X_train, y_train) and used the following hyperparameters:
+Architecture:
+- Hidden layers (hidden_layer_sizes): two hidden layers with 256 and 128 neurons;
+- Activation function (activation): ReLU, chosen for its efficiency in gradient propagation and non-linear learning.
+Optimization:
+- Algorithm (solver): adam, an efficient optimizer for large and sparse data;
+- Learning rate (learning_rate_init): 0.001 — default value suitable for stability;
+- Maximum number of epochs (max_iter): 3000 — allows the network sufficient training cycles for convergence.
+Regularization:
+- Early stopping: enabled (early_stopping=True) — training stops when validation performance no longer increases;
+- L2 regularization (alpha): 0.0001 — prevents overfitting by penalizing large weights.
 
-Modelul a obținut o acuratețe generală de 64.48%, cu următoarele observații importante extrase din matricea de confuzie:
-- Slightly Popular și Moderately Popular sunt cel mai bine clasificate (f1-scores de 0.77 și 0.67), fiind și cele mai frecvente clase;
-- Popular are o performanță decentă (f1 ≈ 0.48), dar confuziile sunt frecvente cu Moderately Popular;
-- Clasele Unpopular și Viral sunt slab clasificate (f1 ≈ 0.15–0.33), cu numeroase confuzii către Popular și Slightly Popular.
-- Modelul tinde să favorizeze clasele dominante și are dificultăți în a învăța reprezentări clare pentru clasele rare. De asemenea, observăm că Viral este frecvent confundată cu Popular, iar Unpopular este distribuită între mai multe clase.
+The model achieved an overall accuracy of 64.48%, with the following important observations extracted from the confusion matrix:
+- Slightly Popular and Moderately Popular are the best classified (f1-scores of 0.77 and 0.67), being also the most frequent classes;
+- Popular performs decently (f1 ≈ 0.48), but confusions with Moderately Popular are frequent;
+- The Unpopular and Viral classes are poorly classified (f1 ≈ 0.15–0.33), with numerous confusions with Popular and Slightly Popular.
+- The model tends to favor dominant classes and has difficulty learning clear representations for rare classes. We also note that Viral is frequently confused with Popular, and Unpopular is distributed among several classes.
 
 ![alt text](images/news_popularity/algorithms/mlp_loss_curve.png)
 
 ![alt text](images/news_popularity/algorithms/mlp_accuracy_curve.png)
 
-## Comparatie
+## Comparison
 | Method | Accuracy-AIR | Accuracy-NEWS |
 |--------|--------------|----------------|
 | dt     | 0.8886       | 0.8135         |
